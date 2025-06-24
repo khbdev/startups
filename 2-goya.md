@@ -1,5 +1,3 @@
----
-
 # 🎵 Typing to Music Web App: G‘oya va Texnik Hujjat
 
 ## 💡 Umumiy Taqdimot
@@ -10,7 +8,7 @@ Bu web-ilova foydalanuvchiga o'zining sevimli musiqasi ostida matn yozish tajrib
 
 > **Typing + Music = Focus + Fun + Skill**
 
-### Foydalanuvchi oqimi:
+### Foydalanuvchi oqimi
 
 1. Musiqa faylini yuklaydi (`.mp3`, `.wav`)
 2. Shu musiqaga bog'liq matn (lyrics yoki ilhomlantirilgan paragraf) ekranga chiqadi
@@ -79,9 +77,8 @@ Bu web-ilova foydalanuvchiga o'zining sevimli musiqasi ostida matn yozish tajrib
 5. UI polishing + V2 funktsiyalar
 
 ---
-// 
 
-## 🚫 Nima bu loyiha emas:
+## 🚫 Nima bu loyiha emas
 
 * Bu karaoke emas
 * Bu typing game emas
@@ -93,3 +90,5 @@ Bu web-ilova foydalanuvchiga o'zining sevimli musiqasi ostida matn yozish tajrib
 
 ## 📄 Mualliflik
 
+Loyiha muallifi: Azizbek Webcoder (aka Coder)
+Yordamchi AI: ChatGPT (Yiban versiyasi)
