@@ -79,6 +79,7 @@ Bu web-ilova foydalanuvchiga o'zining sevimli musiqasi ostida matn yozish tajrib
 5. UI polishing + V2 funktsiyalar
 
 ---
+// 
 
 ## 🚫 Nima bu loyiha emas:
 
