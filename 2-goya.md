@@ -1,125 +1,94 @@
 ---
 
-# 🧾 TEXNIK TOPSHIRIQ (TZ)
+# 🎵 Typing to Music Web App: G‘oya va Texnik Hujjat
 
-## 📌 Loyiha nomi:
+## 💡 Umumiy Taqdimot
 
-Forge CLI — VPS serverda dasturchilar uchun branch asosida mustaqil sandbox yaratadigan CLI vosita.
+Bu web-ilova foydalanuvchiga o'zining sevimli musiqasi ostida matn yozish tajribasini taqdim etadi. Foydalanuvchi musiqa yuklaydi, shu musiqaga mos matn chiqariladi va MonkType uslubida yozish interfeysi ishga tushadi. Matn yozish paytida musiqa chaladi, foydalanuvchi xatoliklar, tezlik va aniqlik bo'yicha o'zini sinab ko'radi.
 
----
+## 🎧 Asosiy G‘oya
 
-## 🎯 Loyihaning asosiy maqsadi:
+> **Typing + Music = Focus + Fun + Skill**
 
-Laravel, Node, Go, Python, Rust, yoki har qanday texnologiyada ishlovchi dasturchilar uchun VPS serverda git kabi ishlovchi tizim
+### Foydalanuvchi oqimi:
 
----
-
-## 👥 Maqsadli auditoriya:
-
-* Middle / Senior backend developerlar
-* Junior developerlar (xavfsiz sandboxda ishlashi uchun)
-* DevOps engineer’lar (oddiy test muhitlarini ajratish uchun)
-* Team lead’lar (yangi ishga kelganlarga xavfsiz joy berish uchun)
+1. Musiqa faylini yuklaydi (`.mp3`, `.wav`)
+2. Shu musiqaga bog'liq matn (lyrics yoki ilhomlantirilgan paragraf) ekranga chiqadi
+3. "Boshlash" tugmasini bosadi
+4. Musiqa chalina boshlaydi, matnni yozish boshlanadi
+5. Typing tugaganda statistikalar chiqadi (WPM, Accuracy, Time)
 
 ---
 
-## 🔑 Asosiy konsepsiya:
+## 🔄 Ilova xususiyatlari
 
-* Har bir developer forge branch <name> buyrug‘i orqali o‘zining izolyatsiyalangan ish joyini yaratadi.
-* Har bir branch faqat 1 ta katalog va unga tegishli snapshot**lardan iborat.
-* Hech qanday Laravel, PHP, nginx, MySQL avtomatik o‘rnatilmaydi.
-* Har bir branchdagi o‘zgarishlar `forge commit` bilan snapshot qilinadi.
-* VPS serverga zarar yetkazmaslik uchun `forge destroy` bilan branch tozalab tashlanadi.
-* Bu Git falsafasiga o‘xshaydi, lekin bu CLI darajasida, **operatsion tizim muhitida branchlash hisoblanadi.
+### ✅ Minimal Viable Product (MVP)
 
----
+* [ ] Musiqa fayl yuklash (faqat local fayl)
+* [ ] Matnni avtomatik bog'lash yoki tanlash
+* [ ] Audio player (orqa fonda chaladi)
+* [ ] MonkType uslubida typing interfeys
+* [ ] Real-time xatoliklar va progress ko'rsatkichlari
+* [ ] Sessiya tugagach: statistikani chiqarish
 
-## 🧱 Arxitektura:
+### 📆 Qo‘shimcha imkoniyatlar (V2)
 
-### 📂 Katalog struktura:
-
-/home/forge/
-├── forge_branch_ali/
-├── forge_branch_sardor/
-└── .forge_snapshots/
-    ├── forge_branch_ali_2025-06-14_12-00.zip
-    └── forge_branch_sardor_2025-06-14_13-30.zip
+* [ ] YouTube/Spotify link orqali musiqa qo‘shish
+* [ ] AI-generated text (musiqa janriga qarab matn yaratish)
+* [ ] "Typing challenge" rejimi (do‘stlar bilan bahs)
+* [ ] Progress saqlash (user login bilan)
 
 ---
 
-### ⚙️ Buyruqlar funksionalligi:
+## 📃 Texnik Arxitektura
 
-#### ✅ forge branch <name>
-
-* Katalog yaratadi: forge_branch_<name>
-* Ichida hech nima avtomatik bo‘lmaydi
-
-#### ✅ forge ssh <name>
-
-* Terminal ichida cd forge_branch_<name> qiladi
-* (Kelajakda: chroot, port isolation qo‘shilishi mumkin)
-
-#### ✅ forge commit
-
-* Joriy branch holatini .forge_snapshots/ katalogiga saqlaydi
-* .zip, tar.gz, yoki rsync bilan bajariladi
-
-#### ✅ forge rollback
-
-* Oxirgi snapshotni joriy branchga qaytaradi
-
-#### ✅ forge destroy <name>
-
-* Katalogni va snapshot’ni o‘chiradi
-
-#### ✅ forge list
-
-* Barcha mavjud branchlarni chiqaradi
-
-#### ✅ forge status <name>
-
-* Branch haqida meta ma'lumot: yaratilgan vaqt, commit soni, oxirgi snapshot
+| Qism              | Texnologiya                    |
+| ----------------- | ------------------------------ |
+| Frontend          | React + TailwindCSS            |
+| Typing Engine     | Custom + useEffect based logic |
+| Audio Player      | HTML5 Audio API yoki Tone.js   |
+| Backend (opsiyon) | Laravel / Node.js / Firebase   |
+| Fayl Hosting      | S3 / Firebase Storage / Local  |
+| State Management  | Zustand / Context API          |
 
 ---
 
-## 🧰 Texnologiyalar:
+## 📅 Foydalanuvchi Rollari
 
-| Texnologiya  | Izoh                          |
-| ------------ | ----------------------------- |
-| Laravel Zero | CLI framework sifatida        |
-| PHP 8+       | CLI logika                    |
-| Bash         | Fayl tizimi amallari          |
-| rsync / zip  | Snapshot yaratish va rollback |
-| JSON / Yaml  | Metadata saqlash uchun        |
+* **Guest:** Faqat typing sinovlarini bajaradi
+* **Registered:** O‘z sessiyalarini saqlaydi, musiqani profili bilan bog‘laydi
 
 ---
 
-## 🚀 Kelajakdagi imkoniyatlar (Optional):
+## ⚖️ Muqobil nomlar
 
-* Port izolatsiyasi (8001, 8002, ...) — nginx conf bilan
-* .forge.yml — branchdagi sozlamalar uchun config fayl
-* forge push — branchdan remote VPS ga eksport
-* forge merge — boshqa branch bilan birlashtirish (manual merge)
-* forge env — umumiy PATH, ALIAS, ENV sozlamalarni saqlash
-
----
-
-## 🛡 Xavfsizlik:
-
-* Har bir branch **faqat o‘z hududi**da ishlaydi
-* Root/keng huquqlar kerak bo‘lsa ogohlantirish beriladi
-* Buzilgan branch butun tizimga ta’sir qilmaydi
+* **TypeBeat**
+* **LyricType**
+* **WriteTheRhythm**
+* **SoundKeys**
+* **FlowType**
 
 ---
 
-## 📅 Bosqichma-bosqich reja:
+## 🚀 Reja
 
-| Bosqich | Tavsif                                                   |
-| ------- | -------------------------------------------------------- |
-| 1       | branch, destroy, list komandalarini yozish         |
-| 2       | commit, rollback uchun snapshot mexanizmini qo‘shish |
-| 3       | ssh, status komandalarini yozish                     |
-| 4       | Snapshot arxivlash, log yozish                           |
-| 5       | .forge.yml, port izolatsiya, qo‘shimcha modullar       |
+1. Dizayn prototipi (Figma)
+2. Frontend MVP boshlash
+3. Audio player va typing logikasini bog‘lash
+4. Minimal statistika chiqishi
+5. UI polishing + V2 funktsiyalar
 
 ---
+
+## 🚫 Nima bu loyiha emas:
+
+* Bu karaoke emas
+* Bu typing game emas
+* Bu professional AI lyrics generator emas
+
+> Bu loyiha: **focus, typing, musiqa, zavq** uchun yaratilgan.
+
+---
+
+## 📄 Mualliflik
+
