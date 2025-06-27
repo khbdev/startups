@@ -1,124 +1,123 @@
----
-
-# 🧾 TEXNIK TOPSHIRIQ (TZ)
-
-## 📌 Loyiha nomi:
-
-Forge CLI — VPS serverda dasturchilar uchun branch asosida mustaqil sandbox yaratadigan CLI vosita.
 
 ---
 
-## 🎯 Loyihaning asosiy maqsadi:
+# 🛠️ Forge CLI — Branch-based VPS Sandbox Manager
 
-Laravel, Node, Go, Python, Rust, yoki har qanday texnologiyada ishlovchi dasturchilar uchun VPS serverda git kabi ishlovchi tizim
+## 📌 Loyihaning G‘oyasi
 
----
+**Forge CLI** — bu VPS (virtual private server) ichida o‘rnatiladigan, `git`ga o‘xshash **branch asosida izolyatsiyalangan sandboxlar boshqaruv tizimi**. Dasturchilar bir xil serverda mustaqil ishlashlari uchun mo‘ljallangan. Har bir branch — alohida muhit.
 
-## 👥 Maqsadli auditoriya:
+### 🎯 Muammo
 
-* Middle / Senior backend developerlar
-* Junior developerlar (xavfsiz sandboxda ishlashi uchun)
-* DevOps engineer’lar (oddiy test muhitlarini ajratish uchun)
-* Team lead’lar (yangi ishga kelganlarga xavfsiz joy berish uchun)
-
----
-
-## 🔑 Asosiy konsepsiya:
-
-* Har bir developer forge branch <name> buyrug‘i orqali o‘zining izolyatsiyalangan ish joyini yaratadi.
-* Har bir branch faqat 1 ta katalog va unga tegishli snapshot**lardan iborat.
-* Hech qanday Laravel, PHP, nginx, MySQL avtomatik o‘rnatilmaydi.
-* Har bir branchdagi o‘zgarishlar `forge commit` bilan snapshot qilinadi.
-* VPS serverga zarar yetkazmaslik uchun `forge destroy` bilan branch tozalab tashlanadi.
-* Bu Git falsafasiga o‘xshaydi, lekin bu CLI darajasida, **operatsion tizim muhitida branchlash hisoblanadi.
+* Bir nechta dasturchi bitta VPSda ishlayotganda chalkashlik, fayllar ustiga yozilishi, `.env` buzilishi va konfliktlar tez-tez yuz beradi.
+* Har bir deploy yoki test uchun alohida sozlashlar kerak bo‘ladi: nginx, port, pm2, start skriptlar va hokazo.
+* VPSni boshqarish uchun har safar SSH bilan kirish kerak bo‘ladi.
 
 ---
 
-## 🧱 Arxitektura:
+## ✅ Yechim — Forge CLI
 
-### 📂 Katalog struktura:
+### 🔑 Asosiy imkoniyatlar:
 
-/home/forge/
-├── forge_branch_ali/
-├── forge_branch_sardor/
-└── .forge_snapshots/
-    ├── forge_branch_ali_2025-06-14_12-00.zip
-    └── forge_branch_sardor_2025-06-14_13-30.zip
-
----
-
-### ⚙️ Buyruqlar funksionalligi:
-
-#### ✅ forge branch <name>
-
-* Katalog yaratadi: forge_branch_<name>
-* Ichida hech nima avtomatik bo‘lmaydi
-
-#### ✅ forge ssh <name>
-
-* Terminal ichida cd forge_branch_<name> qiladi
-* (Kelajakda: chroot, port isolation qo‘shilishi mumkin)
-
-#### ✅ forge commit
-
-* Joriy branch holatini .forge_snapshots/ katalogiga saqlaydi
-* .zip, tar.gz, yoki rsync bilan bajariladi
-
-#### ✅ forge rollback
-
-* Oxirgi snapshotni joriy branchga qaytaradi
-
-#### ✅ forge destroy <name>
-
-* Katalogni va snapshot’ni o‘chiradi
-
-#### ✅ forge list
-
-* Barcha mavjud branchlarni chiqaradi
-
-#### ✅ forge status <name>
-
-* Branch haqida meta ma'lumot: yaratilgan vaqt, commit soni, oxirgi snapshot
+| Buyruq                       | Tavsif                                        |
+| ---------------------------- | --------------------------------------------- |
+| `forge branch <nomi>`        | Yangi branch yaratadi (sandbox)               |
+| `forge commit "<xabar>"`     | Branchga snapshot (version point) qo‘shadi    |
+| `forge status`               | Hozirgi branch holatini ko‘rsatadi            |
+| `forge delete branch <nomi>` | Branchni butunlay o‘chiradi                   |
+| `forge log`                  | Commitlar tarixini ko‘rsatadi                 |
+| `forge checkout <nomi>`      | Aktive branchni almashtiradi                  |
+| `forge current`              | Hozir qaysi branchda turganingizni ko‘rsatadi |
 
 ---
 
-## 🧰 Texnologiyalar:
+## 🏗️ Arxitektura
 
-| Texnologiya  | Izoh                          |
-| ------------ | ----------------------------- |
-| golang       | CLI logika                    |
-| Bash         | Fayl tizimi amallari          |
-| rsync / zip  | Snapshot yaratish va rollback |
-| JSON / Yaml  | Metadata saqlash uchun        |
-
----
-
-## 🚀 Kelajakdagi imkoniyatlar (Optional):
-
-* Port izolatsiyasi (8001, 8002, ...) — nginx conf bilan
-* .forge.yml — branchdagi sozlamalar uchun config fayl
-* forge push — branchdan remote VPS ga eksport
-* forge merge — boshqa branch bilan birlashtirish (manual merge)
-* forge env — umumiy PATH, ALIAS, ENV sozlamalarni saqlash
+* **Til**: Go (Statik, portable, tez)
+* **CLI interface**: `cobra` yoki `urfave/cli`
+* **Configlar**: `.forge.json` yoki `.forge.yml`
+* **Branchlar**: `/var/forge/branches/<branch-name>/`
+* **Commitlar**: Fayl snapshotlar (zips, metadata)
+* **Current branch**: `.current` fayl bilan belgilanadi
 
 ---
 
-## 🛡 Xavfsizlik:
+## 🔄 Ishlash Mantig‘i
 
-* Har bir branch **faqat o‘z hududi**da ishlaydi
-* Root/keng huquqlar kerak bo‘lsa ogohlantirish beriladi
-* Buzilgan branch butun tizimga ta’sir qilmaydi
+1. VPS ichida `forge` o‘rnatiladi.
+2. Dasturchi SSH bilan kiradi yoki kelajakda localdan ulanadi.
+3. Har kim `forge branch` orqali o‘z sandboxini ochadi.
+4. `commit`, `status`, `log` orqali ishlanma yuritiladi.
+5. VPS darajasidagi sozlashlar avtomatlashtiriladi (keyingi bosqichda).
+
+---
+
+## 🌍 Kelajakdagi Yo‘nalishlar
+
+### 🧬 Remote Boshqaruv (Forge Remote)
+
+* Localdan turib `forge` vositasi orqali VPSga ulanib boshqarish:
+
+  ```bash
+  forge remote branch feature-x --host 192.168.1.2
+  ```
+
+### 📦 Paket (Stack) tizimi
+
+* Laravel, Node.js, Go, Python, PHP va boshqalar uchun tayyor `package templates`:
+
+  ```bash
+  forge init --stack laravel
+  ```
+* VPS avtomatik:
+
+  * kerakli fayllarni joylashtiradi
+  * port/hostlarni sozlaydi
+  * run/start/stop ssenariylarini tayyorlaydi
 
 ---
 
-## 📅 Bosqichma-bosqich reja:
+## 👤 Maqsadli auditoriya
 
-| Bosqich | Tavsif                                                   |
-| ------- | -------------------------------------------------------- |
-| 1       | branch, destroy, list komandalarini yozish         |
-| 2       | commit, rollback uchun snapshot mexanizmini qo‘shish |
-| 3       | ssh, status komandalarini yozish                     |
-| 4       | Snapshot arxivlash, log yozish                           |
-| 5       | .forge.yml, port izolatsiya, qo‘shimcha modullar       |
+* Laravel, Node.js, Go, Python, Express, Next.js developerlar
+* VPSda ishlab, branch-style sandboxni istaydiganlar
+* Oddiy, xavfsiz, izolyatsiyalangan dev/test muhiti kerak bo‘lgan jamoalar
 
 ---
+
+## 🧪 Misol
+
+```bash
+forge branch api-v2
+forge checkout api-v2
+forge commit "Initial API endpoints"
+forge status
+forge log
+forge delete branch api-v2
+```
+
+---
+
+## 📁 Fayl Struktura
+
+```
+/var/forge/
+├── .current
+├── branches/
+│   ├── main/
+│   ├── feature-x/
+│   │   ├── commits/
+│   │   ├── .meta/
+├── forge.json
+```
+
+---
+
+## 🌟 Nima uchun bu muhim?
+
+> VPS’dagi tartibsizlikni tartibga soladi.
+> Git kabi tanish terminal tajribasi beradi.
+> Sandboxlar bilan xavfsiz va muammosiz ishlash imkonini yaratadi.
+
+---
+
