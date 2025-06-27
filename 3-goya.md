@@ -86,8 +86,7 @@ Laravel, Node, Go, Python, Rust, yoki har qanday texnologiyada ishlovchi dasturc
 
 | Texnologiya  | Izoh                          |
 | ------------ | ----------------------------- |
-| Laravel Zero | CLI framework sifatida        |
-| PHP 8+       | CLI logika                    |
+| golang       | CLI logika                    |
 | Bash         | Fayl tizimi amallari          |
 | rsync / zip  | Snapshot yaratish va rollback |
 | JSON / Yaml  | Metadata saqlash uchun        |
