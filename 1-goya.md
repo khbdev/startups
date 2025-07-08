@@ -16,6 +16,7 @@ Har safar `git add . && git commit -m "" && git push` yozmaslik uchun.
 flash start "xabar"
 
 ---
+```
 amalga oshirildi
 
 https://github.com/khbdev/flash-cli
