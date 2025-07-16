@@ -60,7 +60,6 @@ flash box apply laravel
 Flash CLI — bu oddiy, ammo samarali 3 funksiya orqali developer hayotini tezlashtiradigan vosita:
 
 * `flash start` → Git push shortcut
-* `flash repo` → GitHub repo ochish
 * `flash box` → Laravel yoki boshqa framework’lar uchun setup template
 
 
