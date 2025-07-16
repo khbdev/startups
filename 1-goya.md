@@ -25,24 +25,7 @@ flash start "login page added"
 * `git commit -m "login page added"`
 * `git push`
 
----
 
-### 2. `flash repo`
-
-Terminal ichida GitHub repo yaratadi va ulaydi:
-
-```bash
-flash repo
-```
-
-👉 Nima qiladi:
-
-* `.git` papkani tekshiradi
-* GitHub’da yangi repo ochadi (nom va description so‘raydi)
-* Avtomatik `git remote add origin` qiladi
-* `git push -u origin main` bilan yuboradi
-
----
 
 ### 3. `flash box`
 
