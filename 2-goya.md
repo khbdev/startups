@@ -1,94 +1,123 @@
-# 🎵 Typing to Music Web App: G‘oya va Texnik Hujjat
-
-## 💡 Umumiy Taqdimot
-
-Bu web-ilova foydalanuvchiga o'zining sevimli musiqasi ostida matn yozish tajribasini taqdim etadi. Foydalanuvchi musiqa yuklaydi, shu musiqaga mos matn chiqariladi va MonkType uslubida yozish interfeysi ishga tushadi. Matn yozish paytida musiqa chaladi, foydalanuvchi xatoliklar, tezlik va aniqlik bo'yicha o'zini sinab ko'radi.
-
-## 🎧 Asosiy G‘oya
-
-> **Typing + Music = Focus + Fun + Skill**
-
-### Foydalanuvchi oqimi
-
-1. Musiqa faylini yuklaydi (`.mp3`, `.wav`)
-2. Shu musiqaga bog'liq matn (lyrics yoki ilhomlantirilgan paragraf) ekranga chiqadi
-3. "Boshlash" tugmasini bosadi
-4. Musiqa chalina boshlaydi, matnni yozish boshlanadi
-5. Typing tugaganda statistikalar chiqadi (WPM, Accuracy, Time)
 
 ---
 
-## 🔄 Ilova xususiyatlari
+# 🛠️ Forge CLI — Branch-based VPS Sandbox Manager
 
-### ✅ Minimal Viable Product (MVP)
+## 📌 Loyihaning G‘oyasi
 
-* [ ] Musiqa fayl yuklash (faqat local fayl)
-* [ ] Matnni avtomatik bog'lash yoki tanlash
-* [ ] Audio player (orqa fonda chaladi)
-* [ ] MonkType uslubida typing interfeys
-* [ ] Real-time xatoliklar va progress ko'rsatkichlari
-* [ ] Sessiya tugagach: statistikani chiqarish
+**Forge CLI** — bu VPS (virtual private server) ichida o‘rnatiladigan, `git`ga o‘xshash **branch asosida izolyatsiyalangan sandboxlar boshqaruv tizimi**. Dasturchilar bir xil serverda mustaqil ishlashlari uchun mo‘ljallangan. Har bir branch — alohida muhit.
 
-### 📆 Qo‘shimcha imkoniyatlar (V2)
+### 🎯 Muammo
 
-* [ ] YouTube/Spotify link orqali musiqa qo‘shish
-* [ ] AI-generated text (musiqa janriga qarab matn yaratish)
-* [ ] "Typing challenge" rejimi (do‘stlar bilan bahs)
-* [ ] Progress saqlash (user login bilan)
+* Bir nechta dasturchi bitta VPSda ishlayotganda chalkashlik, fayllar ustiga yozilishi, `.env` buzilishi va konfliktlar tez-tez yuz beradi.
+* Har bir deploy yoki test uchun alohida sozlashlar kerak bo‘ladi: nginx, port, pm2, start skriptlar va hokazo.
+* VPSni boshqarish uchun har safar SSH bilan kirish kerak bo‘ladi.
 
 ---
 
-## 📃 Texnik Arxitektura
+## ✅ Yechim — Forge CLI
 
-| Qism              | Texnologiya                    |
-| ----------------- | ------------------------------ |
-| Frontend          | React + TailwindCSS            |
-| Typing Engine     | Custom + useEffect based logic |
-| Audio Player      | HTML5 Audio API yoki Tone.js   |
-| Backend (opsiyon) | Laravel / Node.js / Firebase   |
-| Fayl Hosting      | S3 / Firebase Storage / Local  |
-| State Management  | Zustand / Context API          |
+### 🔑 Asosiy imkoniyatlar:
 
----
-
-## 📅 Foydalanuvchi Rollari
-
-* **Guest:** Faqat typing sinovlarini bajaradi
-* **Registered:** O‘z sessiyalarini saqlaydi, musiqani profili bilan bog‘laydi
+| Buyruq                       | Tavsif                                        |
+| ---------------------------- | --------------------------------------------- |
+| `forge branch <nomi>`        | Yangi branch yaratadi (sandbox)               |
+| `forge commit "<xabar>"`     | Branchga snapshot (version point) qo‘shadi    |
+| `forge status`               | Hozirgi branch holatini ko‘rsatadi            |
+| `forge delete branch <nomi>` | Branchni butunlay o‘chiradi                   |
+| `forge log`                  | Commitlar tarixini ko‘rsatadi                 |
+| `forge checkout <nomi>`      | Aktive branchni almashtiradi                  |
+| `forge current`              | Hozir qaysi branchda turganingizni ko‘rsatadi |
 
 ---
 
-## ⚖️ Muqobil nomlar
+## 🏗️ Arxitektura
 
-* **TypeBeat**
-* **LyricType**
-* **WriteTheRhythm**
-* **SoundKeys**
-* **FlowType**
-
----
-
-## 🚀 Reja
-
-1. Dizayn prototipi (Figma)
-2. Frontend MVP boshlash
-3. Audio player va typing logikasini bog‘lash
-4. Minimal statistika chiqishi
-5. UI polishing + V2 funktsiyalar
+* **Til**: Go (Statik, portable, tez)
+* **CLI interface**: `cobra` yoki `urfave/cli`
+* **Configlar**: `.forge.json` yoki `.forge.yml`
+* **Branchlar**: `/var/forge/branches/<branch-name>/`
+* **Commitlar**: Fayl snapshotlar (zips, metadata)
+* **Current branch**: `.current` fayl bilan belgilanadi
 
 ---
 
-## 🚫 Nima bu loyiha emas
+## 🔄 Ishlash Mantig‘i
 
-* Bu karaoke emas
-* Bu typing game emas
-* Bu professional AI lyrics generator emas
-
-> Bu loyiha: **focus, typing, musiqa, zavq** uchun yaratilgan.
+1. VPS ichida `forge` o‘rnatiladi.
+2. Dasturchi SSH bilan kiradi yoki kelajakda localdan ulanadi.
+3. Har kim `forge branch` orqali o‘z sandboxini ochadi.
+4. `commit`, `status`, `log` orqali ishlanma yuritiladi.
+5. VPS darajasidagi sozlashlar avtomatlashtiriladi (keyingi bosqichda).
 
 ---
 
-## 📄 Mualliflik
+## 🌍 Kelajakdagi Yo‘nalishlar
 
-Loyiha muallifi: Azizbek Webcoder (aka Coder)
-Yordamchi AI: ChatGPT (Yiban versiyasi)
+### 🧬 Remote Boshqaruv (Forge Remote)
+
+* Localdan turib `forge` vositasi orqali VPSga ulanib boshqarish:
+
+  ```bash
+  forge remote branch feature-x --host 192.168.1.2
+  ```
+
+### 📦 Paket (Stack) tizimi
+
+* Laravel, Node.js, Go, Python, PHP va boshqalar uchun tayyor `package templates`:
+
+  ```bash
+  forge init --stack laravel
+  ```
+* VPS avtomatik:
+
+  * kerakli fayllarni joylashtiradi
+  * port/hostlarni sozlaydi
+  * run/start/stop ssenariylarini tayyorlaydi
+
+---
+
+## 👤 Maqsadli auditoriya
+
+* Laravel, Node.js, Go, Python, Express, Next.js developerlar
+* VPSda ishlab, branch-style sandboxni istaydiganlar
+* Oddiy, xavfsiz, izolyatsiyalangan dev/test muhiti kerak bo‘lgan jamoalar
+
+---
+
+## 🧪 Misol
+
+```bash
+forge branch api-v2
+forge checkout api-v2
+forge commit "Initial API endpoints"
+forge status
+forge log
+forge delete branch api-v2
+```
+
+---
+
+## 📁 Fayl Struktura
+
+```
+/var/forge/
+├── .current
+├── branches/
+│   ├── main/
+│   ├── feature-x/
+│   │   ├── commits/
+│   │   ├── .meta/
+├── forge.json
+```
+
+---
+
+## 🌟 Nima uchun bu muhim?
+
+> VPS’dagi tartibsizlikni tartibga soladi.
+> Git kabi tanish terminal tajribasi beradi.
+> Sandboxlar bilan xavfsiz va muammosiz ishlash imkonini yaratadi.
+
+---
+
