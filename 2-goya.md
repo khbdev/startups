@@ -1,5 +1,3 @@
-
-
 # 📌 Igris CLI    
 
 ## 1️⃣ Loyiha nomi
@@ -9,10 +7,11 @@
 
 ---
 
-## 2️⃣ Loyihaning maqsadi
+##  2️⃣ Loyihaning maqsadi
 
 Dasturchilarga **VPS serverlarda loyihani tez va oson deploy qilish** imkoniyatini berish.
 👉 Endi `ssh`, `apt install`, `docker run`, `systemctl` bilan qiynalish shart emas.
+
 
 Foydalanuvchi faqat:
 
