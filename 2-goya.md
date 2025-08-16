@@ -1,6 +1,6 @@
 
 
-# 📌 Igris CLI      Loyiha mazmuni
+# 📌 Igris CLI    
 
 ## 1️⃣ Loyiha nomi
 
