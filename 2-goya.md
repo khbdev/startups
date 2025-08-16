@@ -1,123 +1,83 @@
 
----
 
-# 🛠️ Forge CLI — Branch-based VPS Sandbox Manager
+# 📌 Igris CLI — Loyiha mazmuni
 
-## 📌 Loyihaning G‘oyasi
+## 1️⃣ Loyiha nomi
 
-**Forge CLI** — bu VPS (virtual private server) ichida o‘rnatiladigan, `git`ga o‘xshash **branch asosida izolyatsiyalangan sandboxlar boshqaruv tizimi**. Dasturchilar bir xil serverda mustaqil ishlashlari uchun mo‘ljallangan. Har bir branch — alohida muhit.
-
-### 🎯 Muammo
-
-* Bir nechta dasturchi bitta VPSda ishlayotganda chalkashlik, fayllar ustiga yozilishi, `.env` buzilishi va konfliktlar tez-tez yuz beradi.
-* Har bir deploy yoki test uchun alohida sozlashlar kerak bo‘ladi: nginx, port, pm2, start skriptlar va hokazo.
-* VPSni boshqarish uchun har safar SSH bilan kirish kerak bo‘ladi.
+**Igris CLI**
+(*qorong‘ulikdan kuch oladigan va hamma narsani boshqaradigan qurol* 😎)
 
 ---
 
-## ✅ Yechim — Forge CLI
+## 2️⃣ Loyihaning maqsadi
 
-### 🔑 Asosiy imkoniyatlar:
+Dasturchilarga **VPS serverlarda loyihani tez va oson deploy qilish** imkoniyatini berish.
+👉 Endi `ssh`, `apt install`, `docker run`, `systemctl` bilan qiynalish shart emas.
 
-| Buyruq                       | Tavsif                                        |
-| ---------------------------- | --------------------------------------------- |
-| `forge branch <nomi>`        | Yangi branch yaratadi (sandbox)               |
-| `forge commit "<xabar>"`     | Branchga snapshot (version point) qo‘shadi    |
-| `forge status`               | Hozirgi branch holatini ko‘rsatadi            |
-| `forge delete branch <nomi>` | Branchni butunlay o‘chiradi                   |
-| `forge log`                  | Commitlar tarixini ko‘rsatadi                 |
-| `forge checkout <nomi>`      | Aktive branchni almashtiradi                  |
-| `forge current`              | Hozir qaysi branchda turganingizni ko‘rsatadi |
-
----
-
-## 🏗️ Arxitektura
-
-* **Til**: Go (Statik, portable, tez)
-* **CLI interface**: `cobra` yoki `urfave/cli`
-* **Configlar**: `.forge.json` yoki `.forge.yml`
-* **Branchlar**: `/var/forge/branches/<branch-name>/`
-* **Commitlar**: Fayl snapshotlar (zips, metadata)
-* **Current branch**: `.current` fayl bilan belgilanadi
-
----
-
-## 🔄 Ishlash Mantig‘i
-
-1. VPS ichida `forge` o‘rnatiladi.
-2. Dasturchi SSH bilan kiradi yoki kelajakda localdan ulanadi.
-3. Har kim `forge branch` orqali o‘z sandboxini ochadi.
-4. `commit`, `status`, `log` orqali ishlanma yuritiladi.
-5. VPS darajasidagi sozlashlar avtomatlashtiriladi (keyingi bosqichda).
-
----
-
-## 🌍 Kelajakdagi Yo‘nalishlar
-
-### 🧬 Remote Boshqaruv (Forge Remote)
-
-* Localdan turib `forge` vositasi orqali VPSga ulanib boshqarish:
-
-  ```bash
-  forge remote branch feature-x --host 192.168.1.2
-  ```
-
-### 📦 Paket (Stack) tizimi
-
-* Laravel, Node.js, Go, Python, PHP va boshqalar uchun tayyor `package templates`:
-
-  ```bash
-  forge init --stack laravel
-  ```
-* VPS avtomatik:
-
-  * kerakli fayllarni joylashtiradi
-  * port/hostlarni sozlaydi
-  * run/start/stop ssenariylarini tayyorlaydi
-
----
-
-## 👤 Maqsadli auditoriya
-
-* Laravel, Node.js, Go, Python, Express, Next.js developerlar
-* VPSda ishlab, branch-style sandboxni istaydiganlar
-* Oddiy, xavfsiz, izolyatsiyalangan dev/test muhiti kerak bo‘lgan jamoalar
-
----
-
-## 🧪 Misol
+Foydalanuvchi faqat:
 
 ```bash
-forge branch api-v2
-forge checkout api-v2
-forge commit "Initial API endpoints"
-forge status
-forge log
-forge delete branch api-v2
+igris vps add  
+igris deploy go
 ```
+
+deydi, va loyiha VPS’da avtomatik ishlay boshlaydi.
 
 ---
 
-## 📁 Fayl Struktura
+## 3️⃣ Yechim (oddiy qilib tushuntirish)
 
-```
-/var/forge/
-├── .current
-├── branches/
-│   ├── main/
-│   ├── feature-x/
-│   │   ├── commits/
-│   │   ├── .meta/
-├── forge.json
-```
+* Odatda dasturchi VPS’da loyiha qo‘yish uchun ko‘p vaqt sarflaydi: **ssh qilish, kutubxonalar o‘rnatish, docker sozlash, nginx sozlash, ssl qo‘shish**.
+* **Igris CLI** bu jarayonni avtomatlashtiradi:
 
----
+  1. VPS ma’lumotini (IP, user, password) saqlab qo‘yadi.
+  2. Github’dan loyihani avtomatik yuklab oladi.
+  3. Dasturlash tilini aniqlaydi (Go, PHP, Node, Python).
+  4. Dockerfile bo‘lsa → uni ishlatadi, bo‘lmasa tayyor Docker template beradi.
+  5. Servisni ishga tushirib beradi (`systemd` yoki `docker-compose`).
+  6. Natijada loyiha ishlashga tayyor bo‘ladi.
 
-## 🌟 Nima uchun bu muhim?
-
-> VPS’dagi tartibsizlikni tartibga soladi.
-> Git kabi tanish terminal tajribasi beradi.
-> Sandboxlar bilan xavfsiz va muammosiz ishlash imkonini yaratadi.
+👉 Xuddi **git** qanchalik soddalashgan bo‘lsa, **igris** ham deployni shunchalik soddalashtiradi.
 
 ---
 
+## 4️⃣ Funksiyalar
+
+### 🔹 VPS boshqaruvi
+
+* `igris vps add` → VPS qo‘shish (ssh + password saqlanadi).
+* `igris vps list` → VPS ro‘yxatini ko‘rish.
+* `igris vps select` → VPS tanlash.
+
+### 🔹 Deploy funksiyasi
+
+* `igris deploy go` → Go loyihani deploy qilish.
+* Repo’dan `git clone` qiladi.
+* Docker yoki systemd orqali avtomatik ishga tushiradi.
+* `igris deploy php/node/python` → keyingi versiyalarda qo‘shiladi.
+
+### 🔹 Qo‘shimcha buyruqlar
+
+* `igris logs` → loyiha loglarini ko‘rsatish.
+* `igris restart` → loyihani qayta ishga tushirish.
+* `igris update` → yangi kodni yuklab qayta build qilish.
+* `igris remove` → loyihani o‘chirish.
+
+### 🔹 Kelajakda
+
+* Domain + nginx sozlash.
+* SSL sertifikat (Let’s Encrypt) qo‘shish.
+* Monitoring (CPU, RAM, traffic).
+* CI/CD integratsiyasi (Github Actions → Igris CLI → VPS).
+
+---
+
+## 🚀 Xulosa
+
+**Igris CLI** — bu dasturchilar uchun **universal deploy CLI**.
+
+* Hozircha **1.0.0 versiya faqat Go uchun** chiqadi (binary yoki docker).
+* Keyin PHP, Node.js va Python qo‘shilib, hamma texnologiyalarni qo‘llab-quvvatlaydi.
+* Maqsad: VPS’da loyiha qo‘yishni **1 daqiqada va 2 ta buyruqda** qilish.
+
+---
