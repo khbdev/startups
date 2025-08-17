@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 # 📌 Igris 
+=======
+.
+# 📌 Igris CLI    
+>>>>>>> 9a76269 (startups)
 
 ## 1️⃣ Loyiha nomi
 
