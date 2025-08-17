@@ -1,4 +1,4 @@
-# 📌 Igris CLI    
+# 📌 Igris 
 
 ## 1️⃣ Loyiha nomi
 
