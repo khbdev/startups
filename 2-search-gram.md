@@ -1,6 +1,6 @@
 
 
-**Loyiha nomi:** Web Search (Telegram kanal izlash web app)
+**Loyiha nomi:** search-gram
 
 **Muammo:**
 
